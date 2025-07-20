@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- JS adds class="dark" here for dark mode -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Focus Starter</title>
+    <link rel="stylesheet" href="./dist/style.css">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" href="https://placehold.co/32x32/6366f1/white?text=FS">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300 font-sans">
+
+    <!-- DND Overlay: Blocks taps during focus session -->
+    <div id="dndOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center flex-col text-center p-4">
+        <h2 class="text-white text-4xl font-bold">Focus Mode</h2>
+        <p class="text-gray-300 mt-2">Finish your session to unlock.</p>
+    </div>
+
+    <!-- Main Container -->
+    <main class="container mx-auto p-4 max-w-lg text-center flex flex-col min-h-screen">
+        <header class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Focus Starter</h1>
+            <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-xl">
+                <span class="dark:hidden">🌙</span>
+                <span class="hidden dark:inline">☀️</span>
+            </button>
+        </header>
+
+        <!-- Timer -->
+        <section class="my-auto">
+            <div id="timerDisplay" class="text-8xl md:text-9xl font-mono font-bold text-gray-800 dark:text-white mb-2">25:00</div>
+            <div id="sessionType" class="text-lg text-gray-500 dark:text-gray-400 mb-6">Focus Session</div>
+            
+            <div class="flex justify-center space-x-4 mb-8">
+                <button id="startPauseBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg text-xl font-bold w-36 transition-all">Start</button>
+                <button id="resetBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-bold transition-colors">Reset</button>
+            </div>
+             <div class="flex justify-center space-x-2 mb-8">
+                <button data-time="1500" class="time-select-btn bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-sm">25 min</button>
+                <button data-time="3000" class="time-select-btn bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-sm">50 min</button>
+                <button data-time="300" class="time-select-btn bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-sm">5 min</button>
+            </div>
+        </section>
+
+        <!-- Music Player -->
+        <section id="musicPlayer" class="mb-20">
+            <label for="musicType" class="text-lg mb-2 block">Focus Music</label>
+            <div class="flex justify-center items-center space-x-2">
+                <select id="musicType" class="bg-white dark:bg-gray-800 p-2 rounded-lg border border-gray-300 dark:border-gray-600 w-1/2">
+                    <option value="lofi hiphop">Lo-fi</option>
+                    <option value="rain">Rain</option>
+                    <option value="forest ambient">Nature</option>
+                    <option value="chillwave">Chill</option>
+                    <option value="cinematic drone" disabled>✨ Premium Drone (Unlock)</option>
+                </select>
+                <button id="unlockMusicBtn" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg font-bold">Unlock</button>
+            </div>
+            <audio id="audioPlayer" loop></audio>
+        </section>
+
+        <!-- Quote on Session Start -->
+        <div id="quoteContainer" class="p-4 bg-indigo-50 dark:bg-gray-800 rounded-lg italic my-4 hidden">
+            <p id="quoteText" class="text-lg"></p>
+            <p id="quoteAuthor" class="text-right mt-2 font-bold"></p>
+        </div>
+
+        <!-- Stats Button -->
+        <button id="statsBtn" class="fixed bottom-20 right-4 bg-indigo-600 text-white p-3 rounded-full shadow-lg z-10">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+        </button>
+
+    </main>
+
+    <!-- Stats Modal -->
+    <div id="statsModal" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center z-40 p-4">
+         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-lg shadow-xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Your Focus Stats (Last 7 Days)</h2>
+                <button id="closeStatsBtn" class="text-2xl">×</button>
+            </div>
+            <canvas id="focusChart"></canvas>
+         </div>
+    </div>
+
+    <!-- Offline Modal -->
+    <div id="offlineModal" class="fixed bottom-20 left-4 bg-yellow-400 text-black p-4 rounded-lg shadow-lg hidden z-20">
+        ⚠️ You are offline. Features may be limited.
+    </div>
+    
+    <!-- AdMob Banner Placeholder -->
+    <div id="admob-banner-placeholder" class="fixed bottom-0 w-full h-14 bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-sm text-gray-500 z-10">
+        Banner Ad
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./src/app.js"></script>
+</body>
+</html>
