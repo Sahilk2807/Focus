@@ -1,5 +1,5 @@
 // --- CONFIGURATION ---
-const API_URL = 'https://focus-starter-backend.onrender.com'; // IMPORTANT: Replace with your deployed backend URL
+const API_URL = 'https://focus-starter.onrender.com'; // IMPORTANT: Replace with your deployed backend URL
 const DEFAULT_FOCUS_TIME = 1500; // 25 minutes in seconds
 const DEFAULT_BREAK_TIME = 300; // 5 minutes in seconds
 
