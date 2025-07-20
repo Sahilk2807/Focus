@@ -1,0 +1,14 @@
+# Node.js dependency folders
+/client/node_modules
+/server/node_modules
+
+# Environment file with secrets - DO NOT COMMIT THIS
+/server/.env
+
+# macOS system files
+.DS_Store
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
