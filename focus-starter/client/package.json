@@ -1,0 +1,11 @@
+{
+  "name": "focus-starter-client",
+  "version": "1.0.0",
+  "description": "Frontend for Focus Starter",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/style.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
